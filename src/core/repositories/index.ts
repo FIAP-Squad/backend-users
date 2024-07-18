@@ -1,0 +1,7 @@
+export * from './IAddAccountRepository'
+export * from './ILoadAccountByCPFRepository'
+export * from './ILoadAccountByEmailRepository'
+export * from './ILoadAccountByTokenRepository'
+export * from './IUpdateAccessTokenRepository'
+export * from './ILogErrorRepository'
+export * from './IDeleteAccessTokenRepository'
