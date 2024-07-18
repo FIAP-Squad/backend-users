@@ -1,0 +1,27 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: users-microservice
+  name: users-microservice
+  namespace: users
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: users-microservice
+  template:
+    metadata:
+      labels:
+        app: users-microservice
+    spec:
+      containers:
+      - image: 43567/backend-users:latest
+        name: users-container
+        ports:
+        - containerPort: 5050
+        envFrom:
+        - configMapRef:
+            name: users-configmap
+      imagePullSecrets:
+        - name: backend-registry-secret
