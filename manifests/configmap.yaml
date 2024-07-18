@@ -8,3 +8,7 @@ data:
   PRODUCTS: products-service.users.svc.cluster.local
   PAYMENT: payment-service.products.svc.cluster.local
   ORDERS: orders-service.orders.svc.cluster.local
+  PORT: 5050
+  MONGODB_URL: mongodb+srv://gabrielvrfreire:y1jL4pgaBdEDJSth@cluster0.rhhrdat.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0
+  MONGODB_DATABASE: tech_challenge_logs
+  JWT_SECRET: any_secret
