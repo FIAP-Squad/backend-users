@@ -31,17 +31,24 @@ jobs:
           zip -r ../artifact.zip .
         working-directory: .
 
+      - name: Changelog
+        uses: scottbrenner/generate-changelog-action@master
+        id: Changelog
+        env:
+          REPO: ${{ github.repository }}
+
       - name: Create Release
         id: create_release
-        uses: actions/create-release@v1
+        uses: actions/create-release@latest
         with:
-          tag_name: v1.0.0
-          release_name: "Release v1.0.0"
-          body: "Descrição do release"
+          tag_name: ${{ github.ref }}
+          release_name: Release ${{ github.ref }}
+          body:
+            ${{ steps.Changelog.outputs.changelog }}
           draft: false
           prerelease: false
         env:
-          GITHUB_TOKEN: ${{ secrets.GIT_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Upload Release Asset
         uses: actions/upload-release-asset@v1
