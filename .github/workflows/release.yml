@@ -12,6 +12,24 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
+      
+      - name: Set up Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: '18'
+      
+      - name: Install dependencies
+        run: npm install
+      
+      - name: Build project
+        run: npm run build
+      
+      - name: Zip the dist folder
+        run: |
+          cd dist
+          zip -r ../${{ github.ref }}.zip .
+        working-directory: .
+
       - name: Create Release
         id: create_release
         uses: actions/create-release@v1
@@ -22,7 +40,14 @@ jobs:
           release_name: Release ${{ github.ref }}
           body: |
             Changes in this Release
-            - First Change
-            - Second Change
+            - First version of the project
           draft: false
           prerelease: false
+
+      - name: Upload Release Asset
+        uses: actions/upload-release-asset@v1
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: ./${{ github.ref }}.zip
+          asset_name: ${{ github.ref }}.zip
+          asset_content_type: application/zip
