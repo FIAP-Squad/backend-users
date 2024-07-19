@@ -5,6 +5,8 @@ on:
     workflows: ["Docker Build and Push"]
     types:
       - completed
+permissions:
+  contents: write
 
 jobs:
   create-release:
@@ -37,12 +39,17 @@ jobs:
         env:
           REPO: ${{ github.repository }}
 
+      - name: Get tag name from ref
+        shell: bash
+        run: echo "::set-output name=tag::${GITHUB_REF#refs/tags/}"
+        id: get_tag
+
       - name: Create Release
         id: create_release
         uses: actions/create-release@latest
         with:
-          tag_name: ${{ github.ref }}
-          release_name: Release ${{ github.ref }}
+          tag_name: ${{ steps.get_tag.outputs.tag }}
+          release_name: Release ${{ steps.get_tag.outputs.tag }}
           body:
             ${{ steps.Changelog.outputs.changelog }}
           draft: false
