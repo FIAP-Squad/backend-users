@@ -5,6 +5,8 @@ on:
     workflows: ["Docker Build and Push"]
     types:
       - completed
+permissions:
+  contents: write
 
 jobs:
   create-release:
