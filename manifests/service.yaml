@@ -10,17 +10,17 @@ spec:
     - port: 80
       targetPort: 5050
   type: LoadBalancer
-# ---
-# apiVersion: v1
-# kind: Service
-# metadata:
-#   name: users-service-clusterip
-#   namespace: users
-# spec:
-#   selector:
-#     app: users-microservice
-#   ports:
-#     - protocol: TCP
-#       port: 80
-#       targetPort: 5050
-#   type: ClusterIP
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: users-service-internal
+  namespace: users
+spec:
+  selector:
+    app: users-microservice
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 5050
+  type: ClusterIP
